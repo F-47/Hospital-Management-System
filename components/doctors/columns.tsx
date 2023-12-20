@@ -1,6 +1,5 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,6 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ColumnDef } from "@tanstack/react-table";
 
 import {
   AlertDialog,
@@ -20,8 +20,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -29,16 +27,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { useState, useTransition } from "react";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import Link from "next/link";
-
-import { Checkbox } from "@/components/ui/checkbox";
-import { GetPatient, deletePatient, updatePatient } from "@/services/patients";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { DeletePatient, UpdatePatient } from "@/services/actions";
+import { DeletePatient, UpdateDoctor } from "@/services/actions";
 import { GetDoctor } from "@/services/doctors";
+import { toast } from "sonner";
 import { DoctorsForm } from "./form";
 
 export const columns: ColumnDef<GetDoctor>[] = [
@@ -101,7 +95,7 @@ export function DoctorsAction({ doctor }: { doctor: GetDoctor }) {
             <DoctorsForm
               onSubmit={(data) =>
                 startTransition(async () => {
-                  const res = await UpdatePatient(doctor.ID, data);
+                  const res = await UpdateDoctor(doctor.ID, data);
                   if (res.success) {
                     toast.success(
                       res?.message ?? "Patient updated successfully!"
