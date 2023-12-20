@@ -34,3 +34,33 @@ export async function DeletePatient(id: number) {
     return { success: false, message: res?.data?.message };
   }
 }
+
+export async function CreateDoctor(data: BaseDoctor) {
+  const res = await adminAPI.post(`/doctors`, data);
+  if (res.status === 200) {
+    revalidatePath("/doctors");
+    return { success: true, message: res?.data?.message };
+  } else {
+    return { success: false, message: res?.data?.message };
+  }
+}
+
+export async function UpdateDoctor(id: number, data: BaseDoctor) {
+  const res = await adminAPI.put(`/doctors/${id}`, data);
+  if (res.status === 200) {
+    revalidatePath("/doctors");
+    return { success: true, message: res?.data?.message };
+  } else {
+    return { success: false, message: res?.data?.message };
+  }
+}
+
+export async function DeleteDoctor(id: number) {
+  const res = await adminAPI.delete(`/doctors/${id}`);
+  if (res.status === 200) {
+    revalidatePath("/doctors");
+    return { success: true, message: res?.data?.message };
+  } else {
+    return { success: false, message: res?.data?.message };
+  }
+}
